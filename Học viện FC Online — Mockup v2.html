@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Học viện FC Online</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070b14;
+  --bg-2:#0d1420;
+  --panel:#111a28;
+  --panel-2:#16202f;
+  --border:#1e2b3d;
+  --border-2:#2a3a52;
+  --text:#e8edf5;
+  --text-2:#95a3b8;
+  --text-3:#5d6b82;
+  --green:#00E87B;
+  --green-dark:#00b862;
+  --green-glow:rgba(0,232,123,0.15);
+  --gold:#FFD230;
+  --gold-dark:#d4a800;
+  --blue:#2BA3FF;
+  --orange:#FF6B35;
+  --red:#ff4d5e;
+  --pitch:linear-gradient(135deg,#041014 0%,#07251c 45%,#0a3d2a 100%);
+  --radius:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;scroll-padding-top:calc(64px + env(safe-area-inset-top,0px));height:100%;}
+body{
+  font-family:'Be Vietnam Pro',system-ui,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.5;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  min-height:100%;
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:200;}
+::selection{background:var(--green);color:#041014;}
+
+/* ============ NAV ============ */
+.nav{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:100;
+  height:64px;display:flex;align-items:center;gap:2px;
+  padding:0 28px;
+  background:rgba(7,11,20,0.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  display:flex;align-items:center;gap:9px;margin-right:28px;cursor:pointer;flex-shrink:0;
+}
+.nav-logo .mark{
+  width:32px;height:32px;border-radius:8px;
+  background:linear-gradient(135deg,var(--green) 0%,var(--blue) 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;
+}
+.nav-logo .txt{font-size:14px;font-weight:800;letter-spacing:-0.3px;line-height:1.1;}
+.nav-logo .txt small{display:block;font-size:9px;font-weight:600;color:var(--green);letter-spacing:1.2px;}
+.nav a,.nav button.navlink{
+  color:var(--text-2);text-decoration:none;font-size:13px;font-weight:500;
+  padding:9px 14px;border-radius:7px;cursor:pointer;white-space:nowrap;
+  background:none;border:none;font-family:inherit;transition:all .14s;
+}
+.nav a:hover,.nav button.navlink:hover{color:var(--text);background:var(--panel);}
+.nav a.active,.nav button.navlink.active{color:var(--green);background:var(--green-glow);}
+.nav .spacer{flex:1;}
+.nav-right{display:flex;align-items:center;gap:8px;}
+
+.mission-btn{
+  position:relative;background:var(--panel);border:1px solid var(--border-2);
+  color:var(--text-2);padding:7px 14px;border-radius:7px;font-size:12px;font-weight:600;
+  cursor:pointer;font-family:inherit;display:none;align-items:center;gap:6px;transition:all .14s;
+}
+.mission-btn:hover{border-color:var(--green);color:var(--green);}
+.mission-badge{
+  position:absolute;top:-5px;right:-5px;
+  background:var(--red);color:#fff;font-size:9px;font-weight:700;
+  min-width:17px;height:17px;border-radius:9px;
+  display:flex;align-items:center;justify-content:center;padding:0 4px;
+  border:2px solid var(--bg);
+}
+.points-chip{
+  background:rgba(255,210,48,0.12);border:1px solid rgba(255,210,48,0.3);
+  color:var(--gold);padding:7px 14px;border-radius:7px;font-size:12px;font-weight:700;
+  cursor:pointer;display:none;align-items:center;gap:5px;transition:all .14s;
+}
+.points-chip:hover{background:rgba(255,210,48,0.2);}
+.user-chip{
+  display:none;align-items:center;gap:8px;
+  padding:5px 14px 5px 5px;border:1px solid var(--border-2);border-radius:20px;
+  font-size:12px;font-weight:600;
+}
+.user-chip .av{
+  width:24px;height:24px;border-radius:50%;
+  background:linear-gradient(135deg,var(--green),var(--blue));
+  display:flex;align-items:center;justify-content:center;font-size:11px;color:#041014;font-weight:800;
+}
+.login-btn{
+  background:var(--green) !important;color:#041014 !important;
+  padding:9px 22px !important;border-radius:7px;font-weight:700 !important;font-size:13px !important;
+}
+.login-btn:hover{background:var(--green-dark) !important;}
+
+/* ============ LANDING ============ */
+#landing{display:block;}
+.kv{
+  min-height:calc(100vh - 64px);
+  background:var(--pitch);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;text-align:center;padding:40px 24px;
+}
+.kv::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 50%,rgba(0,232,123,0.18) 0%,transparent 65%),
+    radial-gradient(ellipse 50% 40% at 20% 80%,rgba(43,163,255,0.12) 0%,transparent 60%);
+}
+/* pitch lines */
+.kv::after{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(to right,rgba(255,255,255,0.025) 1px,transparent 1px),
+    linear-gradient(to bottom,rgba(255,255,255,0.025) 1px,transparent 1px);
+  background-size:70px 70px;
+  mask-image:radial-gradient(ellipse 80% 70% at 50% 50%,#000 20%,transparent 80%);
+}
+.kv-inner{position:relative;z-index:2;max-width:680px;}
+.kv-badge{
+  display:inline-block;padding:6px 18px;border-radius:20px;
+  background:rgba(0,232,123,0.12);border:1px solid rgba(0,232,123,0.35);
+  color:var(--green);font-size:11px;font-weight:700;letter-spacing:1.5px;
+  margin-bottom:24px;
+}
+.kv h1{
+  font-size:clamp(32px,6vw,58px);font-weight:900;line-height:1.05;
+  letter-spacing:-1.5px;margin-bottom:20px;
+}
+.kv h1 .hl{
+  background:linear-gradient(135deg,var(--green) 0%,var(--gold) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.kv p{font-size:16px;color:var(--text-2);margin-bottom:36px;line-height:1.7;}
+.kv-cta{
+  background:var(--green);color:#041014;border:none;
+  padding:16px 42px;border-radius:10px;
+  font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;
+  box-shadow:0 8px 30px rgba(0,232,123,0.25);transition:all .15s;
+}
+.kv-cta:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(0,232,123,0.35);}
+.kv-cta:active{transform:translateY(0);}
+
+/* ============ APP (single page scroll) ============ */
+#app{display:none;}
+.section{padding:64px 24px;max-width:1080px;margin:0 auto;}
+.section-head{margin-bottom:28px;}
+.section-eyebrow{
+  font-size:11px;font-weight:700;color:var(--green);
+  letter-spacing:1.8px;margin-bottom:8px;
+}
+.section-head h2{font-size:28px;font-weight:800;letter-spacing:-0.6px;margin-bottom:6px;}
+.section-head p{font-size:14px;color:var(--text-2);}
+
+/* --- Welcome / profile card --- */
+.hero-user{
+  background:linear-gradient(135deg,var(--panel) 0%,var(--bg-2) 100%);
+  border:1px solid var(--border);border-radius:16px;
+  padding:28px 32px;margin-bottom:32px;position:relative;overflow:hidden;
+}
+.hero-user::before{
+  content:'';position:absolute;top:-60px;right:-40px;width:240px;height:240px;
+  border-radius:50%;background:radial-gradient(circle,rgba(0,232,123,0.1) 0%,transparent 70%);
+}
+.hu-top{display:flex;align-items:center;gap:16px;margin-bottom:24px;position:relative;}
+.hu-avatar{
+  width:60px;height:60px;border-radius:14px;
+  background:linear-gradient(135deg,var(--green),var(--blue));
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;font-weight:900;color:#041014;flex-shrink:0;
+}
+.hu-top h2{font-size:24px;font-weight:800;letter-spacing:-0.5px;}
+.hu-top p{font-size:13px;color:var(--text-2);margin-top:2px;}
+.hu-stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+  background:var(--border);border-radius:12px;overflow:hidden;position:relative;
+}
+.hu-stat{background:var(--bg-2);padding:16px 18px;}
+.hu-stat .lbl{font-size:11px;color:var(--text-3);font-weight:600;margin-bottom:5px;}
+.hu-stat .val{font-size:18px;font-weight:800;letter-spacing:-0.3px;}
+.hu-stat .val.green{color:var(--green);}
+.hu-stat .val.gold{color:var(--gold);}
+
+/* --- Track picker --- */
+.track-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.track{
+  position:relative;border-radius:16px;overflow:hidden;cursor:pointer;
+  border:2px solid var(--border);transition:all .18s;
+  background:var(--panel);min-height:340px;
+  display:flex;flex-direction:column;
+}
+.track:hover{border-color:var(--green);transform:translateY(-4px);}
+.track.rec{border-color:var(--green);}
+.track-rec-tag{
+  position:absolute;top:16px;right:16px;z-index:3;
+  background:var(--green);color:#041014;
+  font-size:10px;font-weight:800;letter-spacing:0.8px;
+  padding:5px 12px;border-radius:14px;
+  display:flex;align-items:center;gap:4px;
+}
+.track-visual{
+  height:150px;position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.track-visual.basic{background:linear-gradient(135deg,#052e1f 0%,#0a4a30 100%);}
+.track-visual.adv{background:linear-gradient(135deg,#2a1f04 0%,#4a3508 100%);}
+.track-visual::after{
+  content:'';position:absolute;inset:0;
+  background-image:linear-gradient(to right,rgba(255,255,255,0.04) 1px,transparent 1px),
+                   linear-gradient(to bottom,rgba(255,255,255,0.04) 1px,transparent 1px);
+  background-size:36px 36px;
+}
+.track-visual .icon{font-size:52px;position:relative;z-index:1;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4));}
+.track-body{padding:22px 24px 24px;flex:1;display:flex;flex-direction:column;}
+.track-body h3{font-size:22px;font-weight:800;margin-bottom:4px;letter-spacing:-0.4px;}
+.track-body .sub{font-size:12px;color:var(--green);font-weight:700;margin-bottom:12px;letter-spacing:0.4px;}
+.track-body .sub.gold{color:var(--gold);}
+.track-body .desc{font-size:13px;color:var(--text-2);line-height:1.7;margin-bottom:16px;flex:1;}
+.track-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px;}
+.track-tags span{
+  font-size:10px;padding:4px 10px;border-radius:5px;
+  background:var(--panel-2);color:var(--text-2);font-weight:600;
+  border:1px solid var(--border);
+}
+.track-btn{
+  width:100%;padding:12px;border-radius:9px;border:none;
+  background:var(--panel-2);color:var(--text);font-size:13px;font-weight:700;
+  cursor:pointer;font-family:inherit;transition:all .14s;
+  border:1px solid var(--border-2);
+}
+.track.rec .track-btn{background:var(--green);color:#041014;border-color:var(--green);}
+.track:hover .track-btn{background:var(--green);color:#041014;border-color:var(--green);}
+
+/* --- Dashboard (returning) --- */
+.continue-card{
+  background:linear-gradient(135deg,rgba(0,232,123,0.08) 0%,var(--panel) 60%);
+  border:1px solid rgba(0,232,123,0.3);border-radius:16px;
+  padding:24px 28px;margin-bottom:20px;position:relative;overflow:hidden;
+}
+.cc-label{
+  font-size:10px;font-weight:800;color:var(--green);
+  letter-spacing:1.6px;margin-bottom:10px;
+  display:flex;align-items:center;gap:6px;
+}
+.cc-body{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;}
+.cc-body h3{font-size:20px;font-weight:800;letter-spacing:-0.3px;}
+.cc-body .meta{font-size:12px;color:var(--text-2);margin-top:3px;}
+.btn-green{
+  background:var(--green);color:#041014;border:none;
+  padding:12px 28px;border-radius:9px;font-size:13px;font-weight:800;
+  cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .14s;
+}
+.btn-green:hover{background:var(--green-dark);}
+.bar{height:7px;background:var(--bg);border-radius:4px;overflow:hidden;position:relative;}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--green-dark),var(--green));border-radius:4px;transition:width .4s;}
+
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.panel{
+  background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:22px 24px;
+}
+.panel h4{font-size:15px;font-weight:700;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;}
+.panel h4 .link{font-size:11px;color:var(--green);cursor:pointer;font-weight:600;}
+
+.prow{margin-bottom:18px;}
+.prow .ph{display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px;}
+.prow .ph b{font-weight:700;}
+.prow .ph span{color:var(--text-3);font-weight:600;}
+.prow .hint{font-size:10px;color:var(--text-3);margin-top:5px;}
+
+.mrow{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:11px 0;border-bottom:1px solid var(--border);font-size:13px;
+}
+.mrow:last-child{border-bottom:none;}
+.mrow.claim{
+  background:rgba(0,232,123,0.08);border:1px solid rgba(0,232,123,0.25);
+  border-radius:9px;padding:11px 14px;margin-bottom:6px;
+}
+.mrow.locked{opacity:0.3;}
+.claim-btn{
+  background:var(--green);color:#041014;border:none;
+  padding:6px 14px;border-radius:6px;font-size:11px;font-weight:800;
+  cursor:pointer;font-family:inherit;
+}
+.mrow .mnum{color:var(--text-3);font-size:12px;font-weight:600;}
+
+.btn-ghost{
+  width:100%;padding:11px;border-radius:9px;
+  background:var(--panel-2);border:1px solid var(--border-2);
+  color:var(--text-2);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;
+  transition:all .14s;
+}
+.btn-ghost:hover{border-color:var(--green);color:var(--green);}
+
+/* ============ UPDATES SECTION ============ */
+.updates-layout{display:grid;grid-template-columns:260px 1fr;gap:20px;}
+.utabs{display:flex;flex-direction:column;gap:4px;}
+.utab{
+  padding:14px 16px;border-radius:10px;font-size:13px;font-weight:600;
+  cursor:pointer;color:var(--text-2);background:transparent;
+  border:1px solid transparent;text-align:left;font-family:inherit;
+  display:flex;align-items:center;gap:10px;transition:all .14s;
+}
+.utab:hover{background:var(--panel);color:var(--text);}
+.utab.active{background:var(--panel);border-color:var(--green);color:var(--text);}
+.utab .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.utab .new{
+  margin-left:auto;background:var(--red);color:#fff;
+  font-size:8px;font-weight:800;padding:2px 6px;border-radius:4px;letter-spacing:0.5px;
+}
+.ucontent{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:28px;}
+.ucontent h3{font-size:20px;font-weight:800;margin-bottom:6px;letter-spacing:-0.3px;}
+.ucontent .umeta{font-size:12px;color:var(--text-3);margin-bottom:20px;display:flex;gap:8px;align-items:center;}
+.utag{
+  font-size:10px;font-weight:700;padding:3px 9px;border-radius:5px;letter-spacing:0.4px;
+}
+.umedia{
+  background:var(--bg-2);border:1px dashed var(--border-2);border-radius:10px;
+  min-height:240px;display:flex;align-items:center;justify-content:center;
+  color:var(--text-3);font-size:13px;text-align:center;padding:24px;margin-bottom:18px;
+  position:relative;
+}
+.utext{font-size:14px;color:var(--text-2);line-height:1.85;}
+.slide-nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(0,0,0,0.5);border:1px solid var(--border-2);
+  color:var(--text);cursor:pointer;font-size:14px;
+  display:flex;align-items:center;justify-content:center;
+}
+.slide-nav.prev{left:12px;}.slide-nav.next{right:12px;}
+.sdots{display:flex;gap:6px;justify-content:center;margin-top:-6px;margin-bottom:18px;}
+.sdots .d{width:7px;height:7px;border-radius:50%;background:var(--border-2);cursor:pointer;}
+.sdots .d.on{background:var(--green);width:18px;border-radius:4px;}
+
+/* ============ ABOUT SECTION ============ */
+.about-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;}
+.about-txt h2{font-size:30px;font-weight:800;line-height:1.25;margin-bottom:20px;letter-spacing:-0.7px;}
+.about-txt p{font-size:14px;color:var(--text-2);line-height:1.9;margin-bottom:14px;}
+.about-feats{display:flex;flex-direction:column;gap:10px;margin-top:22px;}
+.afeat{display:flex;gap:12px;align-items:flex-start;}
+.afeat .ic{
+  width:32px;height:32px;border-radius:8px;flex-shrink:0;
+  background:var(--green-glow);border:1px solid rgba(0,232,123,0.25);
+  display:flex;align-items:center;justify-content:center;font-size:14px;
+}
+.afeat b{font-size:13px;font-weight:700;display:block;}
+.afeat span{font-size:12px;color:var(--text-3);}
+.about-img{
+  background:var(--pitch);border:1px solid var(--border);border-radius:18px;
+  min-height:400px;display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;color:var(--text-3);font-size:13px;text-align:center;padding:24px;
+}
+.about-img::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 50%,rgba(0,232,123,0.14) 0%,transparent 70%);
+}
+.about-img::after{
+  content:'';position:absolute;inset:0;
+  background-image:linear-gradient(to right,rgba(255,255,255,0.03) 1px,transparent 1px),
+                   linear-gradient(to bottom,rgba(255,255,255,0.03) 1px,transparent 1px);
+  background-size:48px 48px;
+}
+.about-img span{position:relative;z-index:1;}
+
+/* ============ LEARN PAGE ============ */
+#learn{display:none;}
+.learn-wrap{max-width:1080px;margin:0 auto;padding:28px 24px 80px;}
+.learn-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;flex-wrap:wrap;gap:12px;}
+.bcrumb{font-size:13px;color:var(--text-2);display:flex;align-items:center;gap:8px;}
+.bcrumb a{color:var(--green);cursor:pointer;text-decoration:none;font-weight:600;}
+.bcrumb b{color:var(--text);font-weight:700;}
+.learn-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.chip{
+  background:var(--panel);border:1px solid var(--border-2);
+  color:var(--text-2);padding:8px 16px;border-radius:8px;
+  font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .14s;
+}
+.chip:hover{border-color:var(--green);color:var(--green);}
+.chip.gold{border-color:rgba(255,210,48,0.3);color:var(--gold);}
+.chip.gold:hover{background:rgba(255,210,48,0.1);}
+
+/* Reward progress bar */
+.reward-panel{
+  background:var(--panel);border:1px solid var(--border);border-radius:14px;
+  padding:22px 26px;margin-bottom:20px;
+}
+.rp-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:20px;flex-wrap:wrap;gap:8px;}
+.rp-head .t{font-size:14px;font-weight:700;}
+.rp-head .c{font-size:13px;color:var(--text-2);}
+.rp-head .c b{color:var(--green);font-size:17px;font-weight:800;}
+.rtrack{position:relative;padding:0 4px;}
+.rline{position:absolute;top:21px;left:6%;right:6%;height:3px;background:var(--border);border-radius:2px;}
+.rline-fill{height:100%;background:linear-gradient(90deg,var(--green-dark),var(--green));border-radius:2px;transition:width .4s;}
+.rnodes{display:flex;justify-content:space-between;position:relative;z-index:1;}
+.rnode{text-align:center;flex:1;}
+.rnode .gift{
+  width:42px;height:42px;margin:0 auto 7px;border-radius:11px;
+  display:flex;align-items:center;justify-content:center;font-size:17px;
+  background:var(--panel-2);border:2px solid var(--border-2);
+  transition:all .2s;
+}
+.rnode.done .gift{background:rgba(0,232,123,0.15);border-color:var(--green);}
+.rnode.ready .gift{
+  background:rgba(255,210,48,0.15);border-color:var(--gold);
+  animation:pulseGold 2s infinite;
+}
+@keyframes pulseGold{0%,100%{box-shadow:0 0 0 0 rgba(255,210,48,0.4);}50%{box-shadow:0 0 0 8px rgba(255,210,48,0);}}
+.rnode .lbl{font-size:10px;color:var(--text-3);font-weight:600;}
+.rnode.done .lbl{color:var(--green);}
+.rnode.ready .lbl{color:var(--gold);}
+
+.learn-layout{display:grid;grid-template-columns:290px 1fr;gap:20px;align-items:start;}
+
+/* Lesson list */
+.llist{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:14px;}
+.llist-head{font-size:12px;font-weight:700;color:var(--text-3);padding:4px 10px 12px;letter-spacing:0.5px;}
+.litem{
+  display:flex;align-items:center;gap:11px;width:100%;
+  padding:11px 12px;border-radius:9px;cursor:pointer;
+  background:transparent;border:1px solid transparent;color:var(--text);
+  font-family:inherit;text-align:left;transition:all .13s;margin-bottom:2px;
+}
+.litem:hover{background:var(--panel-2);}
+.litem.active{background:var(--panel-2);border-color:var(--green);}
+.litem.locked{opacity:0.3;cursor:default;}
+.licon{
+  width:26px;height:26px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;
+  background:var(--bg);border:1.5px solid var(--border-2);color:var(--text-3);
+}
+.licon.done{background:var(--green);border-color:var(--green);color:#041014;}
+.licon.cur{border-color:var(--green);color:var(--green);background:var(--green-glow);}
+.litem .lname{font-size:13px;font-weight:600;line-height:1.3;}
+.litem .lmeta{font-size:10px;color:var(--text-3);margin-top:2px;}
+
+/* Lesson content */
+.lcontent{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:30px 32px;}
+.lc-head{margin-bottom:20px;}
+.lc-head h2{font-size:23px;font-weight:800;letter-spacing:-0.5px;margin-bottom:6px;}
+.lc-meta{font-size:12px;color:var(--text-3);display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+.diff{font-size:10px;font-weight:700;padding:3px 9px;border-radius:5px;}
+.diff.easy{background:rgba(0,232,123,0.12);color:var(--green);}
+.diff.med{background:rgba(255,210,48,0.12);color:var(--gold);}
+.diff.hard{background:rgba(255,107,53,0.12);color:var(--orange);}
+
+/* Format switcher (mockup only) */
+.fmt-switch{
+  display:flex;gap:4px;padding:4px;background:var(--bg);border-radius:9px;
+  margin-bottom:18px;border:1px solid var(--border);
+}
+.fmt-switch button{
+  flex:1;padding:8px;border-radius:6px;border:none;background:transparent;
+  color:var(--text-3);font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;
+  transition:all .13s;
+}
+.fmt-switch button:hover{color:var(--text-2);}
+.fmt-switch button.on{background:var(--panel-2);color:var(--green);}
+.fmt-note{font-size:10px;color:var(--text-3);margin-bottom:14px;text-align:center;}
+
+.lmedia{
+  background:var(--bg-2);border:1px dashed var(--border-2);border-radius:11px;
+  min-height:280px;display:flex;align-items:center;justify-content:center;
+  color:var(--text-3);font-size:13px;text-align:center;padding:24px;
+  margin-bottom:18px;position:relative;
+}
+.lmedia .play{
+  width:60px;height:60px;border-radius:50%;background:rgba(0,232,123,0.15);
+  border:2px solid var(--green);display:flex;align-items:center;justify-content:center;
+  font-size:20px;color:var(--green);margin-bottom:12px;
+}
+.lscroll{
+  max-height:320px;overflow-y:auto;padding-right:12px;margin-bottom:18px;
+  font-size:14px;color:var(--text-2);line-height:1.9;
+}
+.lscroll::-webkit-scrollbar{width:5px;}
+.lscroll::-webkit-scrollbar-track{background:var(--bg);border-radius:3px;}
+.lscroll::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:3px;}
+.lscroll h4{font-size:15px;font-weight:700;color:var(--text);margin:18px 0 8px;}
+.lscroll h4:first-child{margin-top:0;}
+.lbody{font-size:14px;color:var(--text-2);line-height:1.9;margin-bottom:18px;}
+.lbody h4{font-size:15px;font-weight:700;color:var(--text);margin:18px 0 8px;}
+
+/* Lesson progress + unlock */
+.lprog-wrap{margin-bottom:18px;}
+.lprog-head{display:flex;justify-content:space-between;font-size:11px;margin-bottom:7px;}
+.lprog-head span{color:var(--text-3);font-weight:600;}
+.lprog-head b{color:var(--green);font-weight:700;}
+.lprog-bar{height:9px;background:var(--bg);border-radius:5px;position:relative;overflow:visible;}
+.lprog-fill{height:100%;background:linear-gradient(90deg,var(--green-dark),var(--green));border-radius:5px;transition:width .4s;}
+.lprog-mark{
+  position:absolute;top:-5px;left:80%;width:2px;height:19px;
+  background:var(--gold);border-radius:1px;
+}
+.lprog-mark::after{
+  content:'80%';position:absolute;top:-16px;left:50%;transform:translateX(-50%);
+  font-size:9px;color:var(--gold);font-weight:700;white-space:nowrap;
+}
+.lprog-mark.hit::after{content:'✓ 80%';}
+
+.lfooter{
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+  padding-top:20px;border-top:1px solid var(--border);flex-wrap:wrap;
+}
+.lpoints{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:var(--gold);}
+.lfoot-btns{display:flex;gap:8px;}
+.btn-claim{
+  background:var(--gold);color:#2a1f04;border:none;
+  padding:11px 22px;border-radius:9px;font-size:13px;font-weight:800;
+  cursor:pointer;font-family:inherit;transition:all .14s;
+}
+.btn-claim:hover{background:var(--gold-dark);}
+.btn-claim:disabled,.btn-next:disabled{
+  opacity:0.3;cursor:not-allowed;background:var(--panel-2);color:var(--text-3);
+}
+.btn-next{
+  background:var(--green);color:#041014;border:none;
+  padding:11px 22px;border-radius:9px;font-size:13px;font-weight:800;
+  cursor:pointer;font-family:inherit;transition:all .14s;
+}
+.btn-next:hover{background:var(--green-dark);}
+.lhint{font-size:11px;color:var(--text-3);width:100%;text-align:right;}
+
+/* Simulate scroll progress button */
+.sim-btn{
+  background:var(--panel-2);border:1px dashed var(--border-2);color:var(--text-3);
+  padding:7px 14px;border-radius:7px;font-size:11px;cursor:pointer;font-family:inherit;
+  margin-bottom:14px;width:100%;
+}
+.sim-btn:hover{border-color:var(--green);color:var(--green);}
+
+/* ============ MODALS ============ */
+.overlay{
+  position:fixed;inset:0;z-index:150;
+  background:rgba(4,8,14,0.82);backdrop-filter:blur(6px);
+  display:none;align-items:center;justify-content:center;padding:24px;
+  overflow-y:auto;
+}
+.overlay.open{display:flex;}
+
+/* Shop modal — styled like FCO event popup */
+.shop-modal{
+  width:100%;max-width:880px;border-radius:14px;overflow:hidden;
+  background:var(--pitch);
+  border:2px solid var(--gold);
+  box-shadow:0 20px 70px rgba(0,0,0,0.6);
+  position:relative;
+  max-height:88vh;overflow-y:auto;
+}
+.shop-modal::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 0%,rgba(43,163,255,0.18) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 40% at 50% 100%,rgba(0,232,123,0.1) 0%,transparent 60%);
+  pointer-events:none;
+}
+.shop-inner{position:relative;z-index:1;padding:32px;}
+.shop-close{
+  position:absolute;top:18px;right:20px;z-index:3;
+  background:none;border:none;color:#fff;font-size:26px;
+  cursor:pointer;opacity:0.7;line-height:1;font-family:inherit;
+}
+.shop-close:hover{opacity:1;}
+.shop-title{
+  text-align:center;font-size:30px;font-weight:900;
+  color:var(--gold);letter-spacing:1px;
+  text-shadow:0 2px 12px rgba(255,210,48,0.4);
+  margin-bottom:8px;
+}
+.shop-sub{text-align:center;font-size:12px;color:rgba(255,255,255,0.6);margin-bottom:18px;}
+.shop-points{
+  display:block;margin:0 auto 26px;
+  background:rgba(0,0,0,0.4);border:1px solid var(--gold);
+  color:var(--gold);padding:9px 28px;border-radius:20px;
+  font-size:13px;font-weight:800;letter-spacing:0.5px;
+}
+.shop-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;}
+.shop-item{text-align:center;position:relative;}
+.shop-box{
+  aspect-ratio:1;border-radius:10px;position:relative;
+  background:linear-gradient(160deg,rgba(43,163,255,0.25) 0%,rgba(10,30,60,0.6) 100%);
+  border:1px solid rgba(43,163,255,0.4);
+  display:flex;align-items:center;justify-content:center;
+  font-size:30px;margin-bottom:9px;transition:all .16s;cursor:pointer;
+}
+.shop-box:hover{transform:translateY(-3px);border-color:var(--blue);}
+.shop-item.special .shop-box{
+  background:linear-gradient(160deg,rgba(255,107,53,0.3) 0%,rgba(60,20,10,0.6) 100%);
+  border-color:rgba(255,107,53,0.5);
+}
+.shop-item.locked .shop-box{opacity:0.4;cursor:not-allowed;}
+.shop-item.locked .shop-box:hover{transform:none;}
+.shop-count{
+  position:absolute;top:7px;right:9px;
+  font-size:10px;font-weight:700;color:rgba(255,255,255,0.75);
+}
+.shop-limit{
+  position:absolute;top:-8px;left:50%;transform:translateX(-50%);
+  background:var(--orange);color:#fff;font-size:9px;font-weight:800;
+  padding:2px 9px;border-radius:9px;white-space:nowrap;z-index:2;
+}
+.shop-price{
+  display:block;width:100%;padding:7px;border-radius:16px;
+  background:rgba(43,163,255,0.2);border:1px solid rgba(43,163,255,0.5);
+  color:#8ecbff;font-size:11px;font-weight:800;
+  cursor:pointer;font-family:inherit;transition:all .14s;
+}
+.shop-price:hover{background:rgba(43,163,255,0.35);}
+.shop-item.special .shop-price{
+  background:rgba(255,107,53,0.2);border-color:rgba(255,107,53,0.6);color:#ffb08c;
+}
+.shop-item.affordable .shop-price{
+  background:rgba(0,232,123,0.2);border-color:var(--green);color:var(--green);
+}
+.shop-item.locked .shop-price{opacity:0.4;cursor:not-allowed;}
+
+/* Missions modal */
+.mission-modal{
+  width:100%;max-width:520px;background:var(--panel);
+  border:1px solid var(--border-2);border-radius:16px;
+  max-height:86vh;overflow-y:auto;
+}
+.mm-head{
+  padding:22px 26px;border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  position:sticky;top:0;background:var(--panel);z-index:2;
+}
+.mm-head h3{font-size:19px;font-weight:800;}
+.mm-head p{font-size:12px;color:var(--text-3);margin-top:2px;}
+.mm-close{background:none;border:none;color:var(--text-3);font-size:22px;cursor:pointer;font-family:inherit;}
+.mm-close:hover{color:var(--text);}
+.mm-body{padding:20px 26px 26px;}
+.mm-section{font-size:11px;font-weight:700;color:var(--text-3);letter-spacing:1px;margin:18px 0 10px;}
+.mm-section:first-child{margin-top:0;}
+.mm-item{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 16px;border-radius:11px;margin-bottom:8px;
+  background:var(--bg-2);border:1px solid var(--border);
+}
+.mm-item.claim{background:rgba(0,232,123,0.08);border-color:rgba(0,232,123,0.3);}
+.mm-item.locked{opacity:0.3;}
+.mm-item .mi-body{flex:1;}
+.mm-item .mi-title{font-size:13px;font-weight:700;margin-bottom:5px;}
+.mm-item .mi-bar{height:5px;background:var(--bg);border-radius:3px;overflow:hidden;margin-bottom:4px;}
+.mm-item .mi-fill{height:100%;background:var(--green);border-radius:3px;}
+.mm-item .mi-meta{font-size:11px;color:var(--text-3);display:flex;justify-content:space-between;}
+.mm-item .mi-reward{font-size:11px;color:var(--gold);font-weight:700;}
+
+/* AI */
+.ai-fab{
+  position:fixed;bottom:26px;right:26px;z-index:90;
+  width:56px;height:56px;border-radius:50%;border:none;
+  background:linear-gradient(135deg,var(--green),var(--blue));
+  color:#041014;font-size:15px;font-weight:900;cursor:pointer;font-family:inherit;
+  box-shadow:0 8px 28px rgba(0,232,123,0.3);
+  display:none;align-items:center;justify-content:center;transition:all .16s;
+}
+.ai-fab:hover{transform:scale(1.08);}
+.ai-chat{
+  position:fixed;bottom:94px;right:26px;z-index:95;
+  width:370px;background:var(--panel);
+  border:1px solid var(--border-2);border-radius:16px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  display:none;overflow:hidden;
+}
+.ai-chat.open{display:block;}
+.ai-head{
+  padding:16px 20px;border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  background:var(--bg-2);
+}
+.ai-head .t{font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px;}
+.ai-head .t .av{
+  width:26px;height:26px;border-radius:50%;
+  background:linear-gradient(135deg,var(--green),var(--blue));
+  display:flex;align-items:center;justify-content:center;font-size:12px;
+}
+.ai-head button{background:none;border:none;color:var(--text-3);font-size:18px;cursor:pointer;font-family:inherit;}
+.ai-body{padding:18px;max-height:320px;overflow-y:auto;}
+.ai-msg{padding:11px 15px;border-radius:13px;font-size:13px;margin-bottom:9px;max-width:85%;line-height:1.6;}
+.ai-msg.bot{background:var(--bg-2);}
+.ai-msg.me{background:var(--green-glow);color:var(--green);margin-left:auto;border:1px solid rgba(0,232,123,0.2);}
+.ai-sug{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;}
+.ai-sug button{
+  background:var(--bg-2);border:1px solid var(--border-2);border-radius:7px;
+  padding:6px 11px;font-size:11px;color:var(--text-2);cursor:pointer;font-family:inherit;
+}
+.ai-sug button:hover{border-color:var(--green);color:var(--green);}
+.ai-input{display:flex;gap:8px;padding:14px 18px;border-top:1px solid var(--border);}
+.ai-input input{
+  flex:1;padding:10px 14px;border:1px solid var(--border-2);border-radius:9px;
+  font-size:13px;background:var(--bg);color:var(--text);outline:none;font-family:inherit;
+}
+.ai-input input:focus{border-color:var(--green);}
+.ai-input button{
+  background:var(--green);color:#041014;border:none;border-radius:9px;
+  padding:10px 16px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;
+}
+
+.fade{animation:fd .3s ease;}
+@keyframes fd{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+
+/* ============ MOBILE ============ */
+@media(max-width:900px){
+  .nav{padding:0 12px;overflow-x:auto;scrollbar-width:none;}
+  .nav::-webkit-scrollbar{display:none;}
+  .nav a,.nav button.navlink{padding:8px 10px;font-size:12px;flex-shrink:0;}
+  .nav-logo{margin-right:12px;}
+  .nav-logo .txt{display:none;}
+  .section{padding:40px 16px;}
+  .track-grid,.dash-grid,.updates-layout,.about-layout,.learn-layout{grid-template-columns:1fr;}
+  .hu-stats{grid-template-columns:1fr 1fr;}
+  .shop-grid{grid-template-columns:repeat(3,1fr);gap:12px;}
+  .shop-inner{padding:22px 16px;}
+  .shop-title{font-size:22px;}
+  .ai-chat{width:calc(100vw - 24px);right:12px;bottom:88px;}
+  .rnode .gift{width:34px;height:34px;font-size:14px;}
+  .rline{top:17px;}
+  .lcontent{padding:22px 18px;}
+  .learn-wrap{padding:20px 16px 80px;}
+}
+@media(max-width:520px){
+  .shop-grid{grid-template-columns:repeat(2,1fr);}
+  .hu-stats{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()">
+    <div class="mark">⚽</div>
+    <div class="txt">HỌC VIỆN<small>FC ONLINE</small></div>
+  </div>
+  <button class="navlink" id="nv-baihoc" onclick="navTo('track')">Bài học</button>
+  <button class="navlink" id="nv-capnhat" onclick="navTo('updates')">Cập nhật mới</button>
+  <button class="navlink" id="nv-huongdan" onclick="navTo('about')">Hướng dẫn</button>
+  <a href="https://fconline.garena.vn" target="_blank" style="opacity:.65;font-size:12px;">Trang chủ FC Online</a>
+  <span class="spacer"></span>
+  <div class="nav-right">
+    <button class="mission-btn" id="missionBtn" onclick="openMissions()">
+      🎯 Nhiệm vụ
+      <span class="mission-badge" id="missionBadge">1</span>
+    </button>
+    <button class="points-chip" id="pointsChip" onclick="openShop()">⭐ <span id="ptVal">320</span></button>
+    <div class="user-chip" id="userChip"><div class="av">P</div>Phúc</div>
+    <a class="login-btn navlink" id="loginBtn" onclick="doLogin()">Đăng nhập</a>
+  </div>
+</nav>
+
+<!-- ============ LANDING ============ -->
+<div id="landing">
+  <div class="kv">
+    <div class="kv-inner fade">
+      <div class="kv-badge">GIẢI ĐÁP MỌI THẮC MẮC TỪ A ĐẾN Z</div>
+      <h1>Nâng tầm kỹ năng<br><span class="hl">FC Online</span> của bạn</h1>
+      <p>Bài học có hệ thống · Nhiệm vụ thực hành · Phần thưởng hấp dẫn</p>
+      <button class="kv-cta" onclick="doLogin()">Đăng nhập để bắt đầu</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ APP (single page) ============ -->
+<div id="app">
+
+  <!-- SECTION: TRACK / DASHBOARD -->
+  <section class="section" id="sec-track">
+
+    <!-- Case 1: first time -->
+    <div id="first-time">
+      <div class="hero-user">
+        <div class="hu-top">
+          <div class="hu-avatar">P</div>
+          <div>
+            <h2>Chào mừng, Phúc</h2>
+            <p>Rất vui được đồng hành cùng bạn tại Học viện FC Online</p>
+          </div>
+        </div>
+        <div class="hu-stats">
+          <div class="hu-stat"><div class="lbl">CẤP ĐỘ</div><div class="val green">Người mới</div></div>
+          <div class="hu-stat"><div class="lbl">NGÀY TẠO HLV</div><div class="val">12/10/2026</div></div>
+          <div class="hu-stat"><div class="lbl">SỐ NGÀY ĐĂNG NHẬP</div><div class="val">1 ngày</div></div>
+          <div class="hu-stat"><div class="lbl">ĐIỂM TÍCH LŨY</div><div class="val gold">0 điểm</div></div>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <div class="section-eyebrow">BƯỚC ĐẦU TIÊN</div>
+        <h2>Chọn track học của bạn</h2>
+        <p>Dựa trên thông tin tài khoản, chúng tôi đề xuất track phù hợp nhất với bạn.</p>
+      </div>
+
+      <div class="track-grid">
+        <div class="track rec" onclick="pickTrack()">
+          <div class="track-rec-tag">★ ĐỀ XUẤT CHO BẠN</div>
+          <div class="track-visual basic"><div class="icon">⚽</div></div>
+          <div class="track-body">
+            <h3>Cơ bản</h3>
+            <div class="sub">13 BÀI HỌC · ~50 PHÚT</div>
+            <p class="desc">Dành cho người mới bắt đầu hoặc quay lại sau thời gian nghỉ. Nắm vững điều khiển, chuyền bóng, sút bóng, phòng ngự và chiến thuật nền tảng.</p>
+            <div class="track-tags">
+              <span>Điều khiển</span><span>Chuyền bóng</span><span>Sút bóng</span><span>Phòng ngự</span><span>+9 chủ đề</span>
+            </div>
+            <button class="track-btn">Bắt đầu track Cơ bản</button>
+          </div>
+        </div>
+
+        <div class="track" onclick="pickTrack()">
+          <div class="track-visual adv"><div class="icon">🏆</div></div>
+          <div class="track-body">
+            <h3>Nâng cao</h3>
+            <div class="sub gold">9 BÀI HỌC · ~45 PHÚT</div>
+            <p class="desc">Dành cho người chơi muốn nâng tầm kỹ năng. Chiến thuật chuyên sâu, skill moves, đọc trận đấu và tối ưu đội hình theo meta.</p>
+            <div class="track-tags">
+              <span>Skill Moves</span><span>Chiến thuật</span><span>Team Color</span><span>Meta</span><span>+5 chủ đề</span>
+            </div>
+            <button class="track-btn">Bắt đầu track Nâng cao</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 2: returning -->
+    <div id="returning" style="display:none;">
+      <div class="hero-user">
+        <div class="hu-top">
+          <div class="hu-avatar">P</div>
+          <div>
+            <h2>Chào mừng trở lại, Phúc</h2>
+            <p>Bạn đang học rất tốt — tiếp tục duy trì nhé!</p>
+          </div>
+        </div>
+        <div class="hu-stats">
+          <div class="hu-stat"><div class="lbl">CẤP ĐỘ</div><div class="val green">Trung bình</div></div>
+          <div class="hu-stat"><div class="lbl">NGÀY TẠO HLV</div><div class="val">02/09/2026</div></div>
+          <div class="hu-stat"><div class="lbl">SỐ NGÀY ĐĂNG NHẬP</div><div class="val">45 ngày 🔥</div></div>
+          <div class="hu-stat"><div class="lbl">ĐIỂM TÍCH LŨY</div><div class="val gold">320 điểm</div></div>
+        </div>
+      </div>
+
+      <div class="continue-card">
+        <div class="cc-label">▶ TIẾP TỤC HỌC</div>
+        <div class="cc-body">
+          <div>
+            <h3>Rê bóng dính chân</h3>
+            <div class="meta">Track Cơ bản · Bài 4/13 · còn ~3 phút</div>
+          </div>
+          <button class="btn-green" onclick="openLearn(3)">Học tiếp</button>
+        </div>
+        <div class="bar" style="margin-top:16px;"><div class="bar-fill" style="width:26%;"></div></div>
+        <div style="font-size:11px;color:var(--text-3);text-align:right;margin-top:6px;">Hoàn thành 26%</div>
+      </div>
+
+      <div class="dash-grid">
+        <div class="panel">
+          <h4>Tiến độ bài học <span class="link" onclick="openLearn(3)">Xem tất cả →</span></h4>
+          <div class="prow">
+            <div class="ph"><b>Cơ bản</b><span>3/13 bài</span></div>
+            <div class="bar"><div class="bar-fill" style="width:23%;"></div></div>
+          </div>
+          <div class="prow">
+            <div class="ph"><b style="color:var(--text-3);">🔒 Nâng cao</b><span>0/9 bài</span></div>
+            <div class="bar"><div class="bar-fill" style="width:0%;background:var(--border-2);"></div></div>
+            <div class="hint">Hoàn thành track Cơ bản để mở khóa</div>
+          </div>
+          <button class="btn-ghost" onclick="openLearn(3)" style="margin-top:6px;">Vào màn hình học →</button>
+        </div>
+
+        <div class="panel">
+          <h4>Nhiệm vụ <span class="link" onclick="openMissions()">Xem tất cả →</span></h4>
+          <div class="mrow claim">
+            <div>
+              <div style="font-size:12px;font-weight:700;color:var(--green);">Hoàn thành 3 bài học</div>
+              <div style="font-size:10px;color:var(--green);margin-top:2px;">3/3 hoàn thành</div>
+            </div>
+            <button class="claim-btn" onclick="claimReward(this)">Nhận</button>
+          </div>
+          <div class="mrow"><span>Hoàn thành track Cơ bản</span><span class="mnum">3/13</span></div>
+          <div class="mrow"><span>Đăng nhập 7 ngày</span><span class="mnum">5/7</span></div>
+          <div class="mrow"><span>Chơi 10 trận</span><span class="mnum">6/10</span></div>
+          <div class="mrow locked"><span>Hoàn thành track Nâng cao</span><span>🔒</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: UPDATES -->
+  <section class="section" id="sec-updates" style="border-top:1px solid var(--border);">
+    <div class="section-head">
+      <div class="section-eyebrow">TIN TỨC</div>
+      <h2>Cập nhật mới</h2>
+      <p>Những thay đổi mới nhất trong FC Online — chọn mục bên trái để xem chi tiết.</p>
+    </div>
+    <div class="updates-layout">
+      <div class="utabs" id="utabs"></div>
+      <div id="ucontent"></div>
+    </div>
+  </section>
+
+  <!-- SECTION: ABOUT -->
+  <section class="section" id="sec-about" style="border-top:1px solid var(--border);">
+    <div class="about-layout">
+      <div class="about-txt">
+        <div class="section-eyebrow">VỀ CHÚNG TÔI</div>
+        <h2>Giới thiệu về<br>Học viện FC Online</h2>
+        <p>Học viện FCO là trang web hướng dẫn người chơi FC Online chơi game dễ dàng hơn. Khác với các bài viết hướng dẫn rải rác trên internet, chúng tôi xây dựng hệ thống bài học có cấu trúc, đi kèm nhiệm vụ thực hành và phần thưởng tương ứng.</p>
+        <p>Dù bạn là người mới bắt đầu, người chơi quay lại sau thời gian nghỉ, hay người chơi muốn nâng cao kỹ năng — Học viện FCO đều có nội dung phù hợp.</p>
+        <div class="about-feats">
+          <div class="afeat">
+            <div class="ic">📚</div>
+            <div><b>Bài học có cấu trúc</b><span>Chia theo chủ đề, từ cơ bản đến nâng cao</span></div>
+          </div>
+          <div class="afeat">
+            <div class="ic">🎯</div>
+            <div><b>Hệ thống nhiệm vụ</b><span>Mỗi bài học đi kèm nhiệm vụ để thực hành</span></div>
+          </div>
+          <div class="afeat">
+            <div class="ic">🎁</div>
+            <div><b>Phần thưởng</b><span>Tích điểm đổi quà tại Shop đổi điểm</span></div>
+          </div>
+          <div class="afeat">
+            <div class="ic">🤖</div>
+            <div><b>Trợ lý AI</b><span>Hỏi đáp và nhận gợi ý phù hợp với trình độ</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="about-img"><span>Hình ảnh / KV giới thiệu<br>Học viện FC Online</span></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ LEARN PAGE ============ -->
+<div id="learn">
+  <div class="learn-wrap">
+    <div class="learn-top">
+      <div class="bcrumb">
+        <a onclick="backHome()">← Quay về trang chủ</a>
+        <span style="color:var(--text-3);">/</span>
+        <b>Track Cơ bản</b>
+      </div>
+      <div class="learn-actions">
+        <button class="chip" onclick="alert('Hoàn thành track Cơ bản để mở khóa Nâng cao')">Chuyển sang Nâng cao</button>
+        <button class="chip gold" onclick="openShop()">⭐ Đổi điểm</button>
+      </div>
+    </div>
+
+    <!-- Reward progress -->
+    <div class="reward-panel">
+      <div class="rp-head">
+        <div class="t">Phần thưởng theo tiến độ</div>
+        <div class="c">Đã hoàn thành <b id="doneCount">3</b> / 13 bài</div>
+      </div>
+      <div class="rtrack">
+        <div class="rline"><div class="rline-fill" id="rlineFill" style="width:17%;"></div></div>
+        <div class="rnodes" id="rnodes"></div>
+      </div>
+    </div>
+
+    <div class="learn-layout">
+      <div class="llist">
+        <div class="llist-head">DANH SÁCH BÀI HỌC</div>
+        <div id="llist"></div>
+      </div>
+      <div class="lcontent" id="lcontent"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SHOP MODAL ============ -->
+<div class="overlay" id="shopOverlay" onclick="if(event.target===this)closeShop()">
+  <div class="shop-modal">
+    <button class="shop-close" onclick="closeShop()">✕</button>
+    <div class="shop-inner">
+      <div class="shop-title">SHOP ĐỔI ĐIỂM</div>
+      <div class="shop-sub">Điểm tích lũy dùng để đổi các phần quà tại Shop đổi điểm và điểm sẽ không bị mất ở mục đua top.</div>
+      <button class="shop-points">ĐIỂM HIỆN CÓ: <span id="shopPts">320</span></button>
+      <div class="shop-grid" id="shopGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MISSIONS MODAL ============ -->
+<div class="overlay" id="missionOverlay" onclick="if(event.target===this)closeMissions()">
+  <div class="mission-modal">
+    <div class="mm-head">
+      <div>
+        <h3>🎯 Nhiệm vụ</h3>
+        <p>Hoàn thành nhiệm vụ để nhận điểm thưởng</p>
+      </div>
+      <button class="mm-close" onclick="closeMissions()">✕</button>
+    </div>
+    <div class="mm-body" id="mmBody"></div>
+  </div>
+</div>
+
+<!-- ============ AI ============ -->
+<button class="ai-fab" id="aiFab" onclick="toggleAI()">AI</button>
+<div class="ai-chat" id="aiChat">
+  <div class="ai-head">
+    <div class="t"><div class="av">🤖</div>Trợ lý FCO</div>
+    <button onclick="toggleAI()">✕</button>
+  </div>
+  <div class="ai-body" id="aiBody">
+    <div class="ai-msg bot">Chào Phúc! Mình có thể giúp gì cho bạn về FC Online?</div>
+    <div class="ai-sug">
+      <button onclick="aiSend('Gợi ý bài học')">Gợi ý bài học</button>
+      <button onclick="aiSend('Gợi ý đội hình')">Gợi ý đội hình</button>
+      <button onclick="aiSend('Chiến thuật')">Chiến thuật</button>
+    </div>
+  </div>
+  <div class="ai-input">
+    <input type="text" id="aiInput" placeholder="Hỏi về bài học, chiến thuật..." onkeydown="if(event.key==='Enter')aiSend()">
+    <button onclick="aiSend()">Gửi</button>
+  </div>
+</div>
+
+<script>
+/* ===== DATA ===== */
+var LESSONS=[
+ {t:'Điều khiển cơ bản',d:'Dễ',dc:'easy',m:'3 phút',done:true,fmt:'video',
+  media:'Video hướng dẫn điều khiển cơ bản',
+  body:'<h4>Làm quen với phím điều khiển</h4>Bài học giúp bạn nắm các phím cơ bản: di chuyển, chạy nước rút, chuyền, sút và các nút hành động chính trong trận đấu.'},
+ {t:'Chuyền bóng',d:'Dễ',dc:'easy',m:'4 phút',done:true,fmt:'slideshow',
+  media:'Slideshow: các loại chuyền bóng',
+  body:'<h4>Các loại chuyền</h4>Chuyền ngắn, chuyền dài, chuyền bổng, chuyền xuyên tuyến. Mỗi loại phù hợp với tình huống khác nhau.'},
+ {t:'Sút bóng',d:'Trung bình',dc:'med',m:'5 phút',done:true,fmt:'video',
+  media:'Video phân tích góc sút',
+  body:'<h4>Kỹ thuật sút</h4>Sút thường, sút lực, chip shot, finesse shot. Vị trí và thời điểm sút quyết định tỷ lệ thành bàn.'},
+ {t:'Rê bóng dính chân',d:'Trung bình',dc:'med',m:'3 phút',done:false,cur:true,fmt:'video',
+  media:'Video + GIF kỹ thuật rê bóng dính chân',
+  body:'<h4>Rê bóng dính chân là gì?</h4>Kỹ thuật giúp kiểm soát bóng sát chân khi di chuyển, giữ bóng an toàn trong không gian hẹp.<h4>Cách thực hiện</h4>Giữ nút L1/LB khi di chuyển, kết hợp analog trái để điều hướng. Giữ tốc độ vừa phải để bóng không rời chân quá xa.<h4>Khi nào nên dùng?</h4>Khi đối thủ pressing gần, khi cần giữ bóng chờ đồng đội chạy chỗ, hoặc khi di chuyển trong khu vực đông người.<h4>Lưu ý</h4>Không nên lạm dụng ở khu vực 1/3 sân nhà vì dễ bị cướp bóng dẫn đến phản công nguy hiểm.<h4>Bài tập thực hành</h4>Vào chế độ tập luyện, thử rê bóng qua 5 cọc liên tiếp mà không để bóng rời chân quá 2 mét.'},
+ {t:'Phòng ngự',d:'Khó',dc:'hard',m:'6 phút',done:false,fmt:'text',
+  media:'',
+  body:'<h4>Nguyên tắc phòng ngự</h4>Giữ cự ly đội hình, không lao vào xoạc bừa. Ưu tiên chặn hướng chuyền nguy hiểm trước khi cướp bóng.<h4>Jockey</h4>Giữ L2/LT để di chuyển ngang mặt đối thủ, ép họ vào biên thay vì để họ đi vào trung lộ.<h4>Standing tackle</h4>Chỉ xoạc khi chắc chắn chạm bóng trước. Xoạc hụt ở 1/3 sân nhà rất nguy hiểm.<h4>Sliding tackle</h4>Dùng khi là phương án cuối cùng, hoặc khi đối thủ đã vượt qua bạn.<h4>Pressing</h4>Pressing theo nhóm hiệu quả hơn pressing đơn lẻ. Dùng nút gọi đồng đội áp sát để tạo áp lực kép.<h4>Đọc hướng tấn công</h4>Quan sát vị trí cầu thủ đối phương để dự đoán hướng chuyền tiếp theo.'},
+ {t:'Chiến thuật 4-3-3',d:'Khó',dc:'hard',m:'5 phút',done:false,fmt:'slideshow',media:'Slideshow sơ đồ 4-3-3',body:'<h4>Sơ đồ 4-3-3</h4>Cân bằng công thủ, phù hợp lối chơi kiểm soát bóng và tấn công biên.'},
+ {t:'Chiến thuật 4-2-3-1',d:'Khó',dc:'hard',m:'5 phút',done:false,fmt:'slideshow',media:'Slideshow sơ đồ 4-2-3-1',body:'<h4>Sơ đồ 4-2-3-1</h4>Phổ biến nhất hiện tại với 2 CDM bảo vệ hàng thủ.'},
+ {t:'Tấn công nhanh',d:'Trung bình',dc:'med',m:'4 phút',done:false,fmt:'video',media:'Video tấn công nhanh',body:'<h4>Phản công nhanh</h4>Chuyển trạng thái từ phòng ngự sang tấn công trong 3-4 đường chuyền.'},
+ {t:'Phạt góc & đá phạt',d:'Trung bình',dc:'med',m:'4 phút',done:false,fmt:'video',media:'Video đá phạt',body:'<h4>Đá phạt</h4>Kỹ thuật đá phạt trực tiếp, phạt góc và các bài phối hợp.'},
+ {t:'Xây dựng đội hình',d:'Trung bình',dc:'med',m:'5 phút',done:false,fmt:'text',media:'',body:'<h4>Chemistry</h4>Hiểu cách chemistry hoạt động và ảnh hưởng đến chỉ số cầu thủ.<h4>Team Color</h4>Chọn team color phù hợp với ngân sách và lối chơi.'},
+ {t:'Quản lý tài chính',d:'Dễ',dc:'easy',m:'3 phút',done:false,fmt:'text',media:'',body:'<h4>Quản lý BP và FC</h4>Thời điểm mua bán cầu thủ, cách tiết kiệm và tối ưu ngân sách.'},
+ {t:'Skill Moves nâng cao',d:'Khó',dc:'hard',m:'6 phút',done:false,fmt:'slideshow',media:'Slideshow skill moves',body:'<h4>Skill Moves</h4>Elastico, roulette, ball roll, heel-to-heel và cách kết hợp.'},
+ {t:'Đọc trận đấu',d:'Khó',dc:'hard',m:'7 phút',done:false,fmt:'video',media:'Video phân tích trận đấu',body:'<h4>Đọc trận đấu</h4>Điều chỉnh chiến thuật giữa trận, quản lý thể lực và thay người hợp lý.'}
+];
+
+var UPDATES=[
+ {t:'Cập nhật lương cầu thủ',tag:'Gameplay',color:'var(--green)',date:'15/10/2026',fmt:'slideshow',isNew:true,
+  media:'Bảng lương cầu thủ mùa mới',
+  text:'Lương cầu thủ đã được điều chỉnh trong bản cập nhật mới. Một số cầu thủ phổ biến như Haaland, Mbappé tăng lương đáng kể. Ngược lại, một số lão tướng được giảm lương giúp bạn dễ xây dựng đội hình trong ngân sách hạn chế.'},
+ {t:'Mùa thẻ mới SPT',tag:'Thẻ',color:'var(--gold)',date:'12/10/2026',fmt:'image',isNew:true,
+  media:'Key Visual mùa thẻ SPT',
+  text:'Mùa thẻ SPT (Special Transfer) chính thức ra mắt với danh sách cầu thủ được nâng cấp chỉ số. Các cầu thủ đáng chú ý: Messi SPT, Ronaldo SPT, Neymar SPT. Chỉ số tổng thể tăng trung bình 3–5 điểm so với thẻ thường.'},
+ {t:'Cập nhật Team Color',tag:'Gameplay',color:'var(--green)',date:'10/10/2026',fmt:'image',
+  media:'Bảng Team Color mùa mới',
+  text:'Team Color mùa mới đã được cập nhật. Real Madrid và Manchester City tiếp tục giữ buff mạnh. Liverpool được nâng cấp đáng kể ở hàng tiền vệ. PSG bị nerf nhẹ ở hàng thủ.'},
+ {t:'Chỉ số ẩn vàng mới',tag:'Chỉ số',color:'var(--blue)',date:'08/10/2026',fmt:'image',
+  media:'Bảng so sánh chỉ số ẩn vàng',
+  text:'Một số cầu thủ được phát hiện có chỉ số ẩn vàng mới. Những cầu thủ này có hiệu suất thực tế cao hơn chỉ số hiển thị trên thẻ, đặc biệt ở khả năng sút xa và chuyền bóng.'},
+ {t:'Cập nhật khác',tag:'Khác',color:'var(--text-3)',date:'05/10/2026',fmt:'text',
+  media:'',
+  text:'• Sửa lỗi lag trong chế độ Online<br>• Cải thiện AI trong chế độ Offline<br>• Thêm hiệu ứng ăn mừng mới<br>• Cập nhật giao diện menu chính<br>• Sự kiện mới: Giải đấu cuối tuần với phần thưởng hấp dẫn'}
+];
+
+var MISSIONS=[
+ {t:'Hoàn thành 3 bài học',cur:3,max:3,reward:'+150 điểm',claim:true,group:'Bài học'},
+ {t:'Hoàn thành track Cơ bản',cur:3,max:13,reward:'+500 điểm',group:'Bài học'},
+ {t:'Hoàn thành track Nâng cao',cur:0,max:9,reward:'+800 điểm',locked:true,group:'Bài học'},
+ {t:'Đăng nhập 7 ngày',cur:5,max:7,reward:'+200 điểm',group:'Hoạt động'},
+ {t:'Chơi 10 trận',cur:6,max:10,reward:'+100 điểm',group:'Hoạt động'},
+ {t:'Chiến thắng 5 trận',cur:2,max:5,reward:'+150 điểm',group:'Hoạt động'}
+];
+
+var SHOP=[
+ {icon:'🎁',price:'100.000',limit:'0/2',afford:true},
+ {icon:'🎁',price:'200.000',limit:'0/2',afford:true},
+ {icon:'🎁',price:'400.000',limit:'0/2'},
+ {icon:'🎁',price:'800.000',limit:'0/1'},
+ {icon:'💰',price:'1.000.000',limit:'0/1'},
+ {icon:'🎁',price:'1.200.000',limit:'0/1'},
+ {icon:'🎁',price:'1.500.000',limit:'0/1'},
+ {icon:'💎',price:'4.000.000',limit:'0/1',special:true,left:'CÒN LẠI 5'},
+ {icon:'💎',price:'5.000.000',limit:'0/1',special:true,left:'CÒN LẠI 3'},
+ {icon:'💎',price:'6.000.000',limit:'0/1',special:true,left:'CÒN LẠI 1'}
+];
+
+var REWARDS=[{n:1,i:'🎁'},{n:3,i:'🎁'},{n:5,i:'🎁'},{n:8,i:'🎁'},{n:10,i:'🎁'},{n:13,i:'🏆'}];
+
+/* ===== STATE ===== */
+var curLesson=3, lessonProg=26, doneCount=3, points=320;
+
+/* ===== NAV ===== */
+function doLogin(){
+  document.getElementById('landing').style.display='none';
+  document.getElementById('app').style.display='block';
+  document.getElementById('loginBtn').style.display='none';
+  document.getElementById('userChip').style.display='flex';
+  document.getElementById('aiFab').style.display='flex';
+  renderUpdates();
+  window.scrollTo({top:0});
+}
+function pickTrack(){
+  document.getElementById('first-time').style.display='none';
+  document.getElementById('returning').style.display='block';
+  document.getElementById('pointsChip').style.display='flex';
+  document.getElementById('missionBtn').style.display='flex';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function navTo(sec){
+  if(document.getElementById('learn').style.display==='block'){
+    document.getElementById('learn').style.display='none';
+    document.getElementById('app').style.display='block';
+  }
+  if(document.getElementById('landing').style.display!=='none'){doLogin();}
+  document.querySelectorAll('.navlink').forEach(function(b){b.classList.remove('active');});
+  var map={track:'nv-baihoc',updates:'nv-capnhat',about:'nv-huongdan'};
+  var btn=document.getElementById(map[sec]);
+  if(btn)btn.classList.add('active');
+  var el=document.getElementById('sec-'+sec);
+  if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function goHome(){
+  if(document.getElementById('landing').style.display==='none'){navTo('track');}
+}
+function backHome(){
+  document.getElementById('learn').style.display='none';
+  document.getElementById('app').style.display='block';
+  window.scrollTo({top:0});
+}
+function openLearn(idx){
+  document.getElementById('app').style.display='none';
+  document.getElementById('learn').style.display='block';
+  curLesson=idx;
+  renderRewards();renderList();showLesson(idx);
+  window.scrollTo({top:0});
+}
+
+/* ===== UPDATES ===== */
+function renderUpdates(){
+  var h='';
+  for(var i=0;i<UPDATES.length;i++){
+    var u=UPDATES[i];
+    h+='<button class="utab'+(i===0?' active':'')+'" onclick="showUpdate('+i+',this)">'+
+       '<span class="dot" style="background:'+u.color+';"></span>'+u.t+
+       (u.isNew?'<span class="new">MỚI</span>':'')+'</button>';
+  }
+  document.getElementById('utabs').innerHTML=h;
+  showUpdate(0,null);
+}
+function showUpdate(i,btn){
+  document.querySelectorAll('.utab').forEach(function(t){t.classList.remove('active');});
+  if(btn)btn.classList.add('active');
+  else{var f=document.querySelector('.utab');if(f)f.classList.add('active');}
+  var u=UPDATES[i],media='';
+  if(u.fmt==='slideshow'){
+    media='<div class="umedia">'+
+      '<button class="slide-nav prev">‹</button>'+u.media+'<br><small>(Slideshow — lướt qua lại)</small>'+
+      '<button class="slide-nav next">›</button></div>'+
+      '<div class="sdots"><span class="d on"></span><span class="d"></span><span class="d"></span></div>';
+  }else if(u.fmt==='image'){
+    media='<div class="umedia">'+u.media+'<br><small>(Hình ảnh / Video)</small></div>';
+  }
+  document.getElementById('ucontent').innerHTML=
+    '<div class="ucontent fade"><h3>'+u.t+'</h3>'+
+    '<div class="umeta"><span class="utag" style="background:'+u.color+'20;color:'+u.color+';">'+u.tag+'</span>'+u.date+'</div>'+
+    media+'<div class="utext">'+u.text+'</div></div>';
+}
+
+/* ===== LEARN ===== */
+function renderRewards(){
+  var h='';
+  for(var i=0;i<REWARDS.length;i++){
+    var r=REWARDS[i],cls='';
+    if(doneCount>=r.n)cls=' ready';
+    if(doneCount>r.n||(doneCount>=r.n&&i<2))cls=' done';
+    h+='<div class="rnode'+cls+'"><div class="gift">'+r.i+'</div><div class="lbl">'+r.n+' bài</div></div>';
+  }
+  document.getElementById('rnodes').innerHTML=h;
+  document.getElementById('doneCount').textContent=doneCount;
+  document.getElementById('rlineFill').style.width=Math.min(100,(doneCount/13)*100)+'%';
+}
+function renderList(){
+  var h='';
+  for(var i=0;i<LESSONS.length;i++){
+    var l=LESSONS[i];
+    var locked=!l.done&&!l.cur&&i>curLesson;
+    var ic=l.done?'done':(l.cur?'cur':'');
+    h+='<button class="litem'+(locked?' locked':'')+(i===curLesson?' active':'')+'"'+
+       (locked?'':' onclick="showLesson('+i+')"')+'>'+
+       '<span class="licon '+ic+'">'+(l.done?'✓':(i+1))+'</span>'+
+       '<span><span class="lname">'+l.t+'</span>'+
+       '<span class="lmeta">'+l.d+' · '+l.m+(l.done?' · Hoàn thành':(l.cur?' · Đang học':''))+'</span></span></button>';
+  }
+  document.getElementById('llist').innerHTML=h;
+}
+function showLesson(i){
+  curLesson=i;
+  var l=LESSONS[i];
+  lessonProg=l.done?100:(l.cur?26:0);
+  document.querySelectorAll('.litem').forEach(function(e,k){e.classList.toggle('active',k===i);});
+  renderLesson();
+}
+function setFmt(f){LESSONS[curLesson].fmt=f;renderLesson();}
+function renderLesson(){
+  var l=LESSONS[curLesson],i=curLesson;
+  var body='';
+  if(l.fmt==='video'){
+    body='<div class="lmedia"><div><div class="play">▶</div>'+(l.media||'Video / Hình ảnh minh họa')+'</div></div>'+
+         '<div class="lbody">'+l.body+'</div>';
+  }else if(l.fmt==='slideshow'){
+    body='<div class="lmedia">'+
+         '<button class="slide-nav prev">‹</button>'+
+         '<div>'+(l.media||'Slideshow media')+'<br><small>(Lướt qua lại để xem)</small></div>'+
+         '<button class="slide-nav next">›</button></div>'+
+         '<div class="sdots"><span class="d on"></span><span class="d"></span><span class="d"></span><span class="d"></span></div>'+
+         '<div class="lbody">'+l.body+'</div>';
+  }else{
+    body='<div class="lscroll">'+l.body+l.body+'</div>';
+  }
+  var hit80=lessonProg>=80;
+  document.getElementById('lcontent').innerHTML=
+   '<div class="fade"><div class="lc-head">'+
+   '<h2>Bài '+(i+1)+': '+l.t+'</h2>'+
+   '<div class="lc-meta"><span class="diff '+l.dc+'">'+l.d+'</span>Track Cơ bản · '+l.m+'</div></div>'+
+
+   '<div class="fmt-switch">'+
+   '<button class="'+(l.fmt==='video'?'on':'')+'" onclick="setFmt(\'video\')">📹 Video / Hình ảnh</button>'+
+   '<button class="'+(l.fmt==='slideshow'?'on':'')+'" onclick="setFmt(\'slideshow\')">🖼 Slideshow</button>'+
+   '<button class="'+(l.fmt==='text'?'on':'')+'" onclick="setFmt(\'text\')">📄 Text scroll</button>'+
+   '</div>'+
+   '<div class="fmt-note">↑ Switch này chỉ có trong mockup để test layout — bản thật team sẽ chọn 1 format cho mỗi bài</div>'+
+
+   body+
+
+   (l.done?
+     '<div style="background:rgba(0,232,123,0.08);border:1px solid rgba(0,232,123,0.25);padding:16px;border-radius:11px;text-align:center;margin-bottom:18px;"><span style="color:var(--green);font-weight:700;font-size:14px;">✓ Đã hoàn thành bài học · Đã nhận 100 điểm</span></div>'
+     :
+     '<button class="sim-btn" onclick="simProg()">▶ [Mockup] Giả lập tiến độ học: '+lessonProg+'% → nhấn để +20%</button>'+
+     '<div class="lprog-wrap">'+
+     '<div class="lprog-head"><span>Tiến độ bài học</span><b>'+lessonProg+'%</b></div>'+
+     '<div class="lprog-bar"><div class="lprog-fill" style="width:'+lessonProg+'%;"></div>'+
+     '<div class="lprog-mark'+(hit80?' hit':'')+'"></div></div></div>'
+   )+
+
+   '<div class="lfooter">'+
+   '<div class="lpoints">'+(l.done?'✓ Đã nhận 100 điểm':'🎯 +100 điểm khi hoàn thành')+'</div>'+
+   (l.done?
+     '<div class="lfoot-btns">'+
+     (curLesson>0?'<button class="chip" onclick="prevLesson()">← Bài trước</button>':'')+
+     (curLesson+1<LESSONS.length?
+       '<button class="btn-next" onclick="nextLesson()">Bài tiếp theo →</button>'
+       :'<button class="btn-next" onclick="backHome()">🏁 Hoàn thành track</button>')+
+     '</div>'
+   :
+     '<div class="lfoot-btns">'+
+     '<button class="btn-claim" '+(hit80?'':'disabled')+' onclick="claimLesson()">Nhận điểm</button>'+
+     '<button class="btn-next" '+(hit80?'':'disabled')+' onclick="nextLesson()">Bài tiếp theo →</button>'+
+     '</div>'+
+     (hit80?'':'<div class="lhint">Hoàn thành 80% bài học để mở khóa nút nhận điểm</div>')
+   )+
+   '</div></div>';
+}
+function simProg(){
+  lessonProg=Math.min(100,lessonProg+20);
+  renderLesson();
+}
+function claimLesson(){
+  var l=LESSONS[curLesson];
+  if(l.done)return;
+  l.done=true;l.cur=false;
+  doneCount++;points+=100;
+  if(curLesson+1<LESSONS.length)LESSONS[curLesson+1].cur=true;
+  updatePoints();
+  renderRewards();renderList();renderLesson();
+  flash('🎉 Đã nhận 100 điểm!');
+}
+function prevLesson(){
+  if(curLesson>0){
+    curLesson--;
+    renderList();showLesson(curLesson);
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+}
+function nextLesson(){
+  var l=LESSONS[curLesson];
+  if(!l.done){
+    l.done=true;l.cur=false;doneCount++;points+=100;
+    if(curLesson+1<LESSONS.length)LESSONS[curLesson+1].cur=true;
+    updatePoints();renderRewards();
+  }
+  if(curLesson+1<LESSONS.length){
+    curLesson++;lessonProg=0;
+    renderList();showLesson(curLesson);
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+}
+function updatePoints(){
+  document.getElementById('ptVal').textContent=points;
+  document.getElementById('shopPts').textContent=points;
+}
+function flash(msg){
+  var d=document.createElement('div');
+  d.textContent=msg;
+  d.style.cssText='position:fixed;top:80px;left:50%;transform:translateX(-50%);background:var(--green);color:#041014;padding:12px 28px;border-radius:10px;font-weight:800;font-size:14px;z-index:300;box-shadow:0 8px 30px rgba(0,232,123,0.4);';
+  document.body.appendChild(d);
+  setTimeout(function(){d.remove();},2200);
+}
+
+/* ===== SHOP ===== */
+function renderShop(){
+  var h='';
+  for(var i=0;i<SHOP.length;i++){
+    var s=SHOP[i];
+    var cls=(s.special?' special':'')+(s.afford?' affordable':'');
+    h+='<div class="shop-item'+cls+'">'+
+       (s.left?'<div class="shop-limit">'+s.left+'</div>':'')+
+       '<div class="shop-box"><span class="shop-count">'+s.limit+'</span>'+s.icon+'</div>'+
+       '<button class="shop-price">'+s.price+'</button></div>';
+  }
+  document.getElementById('shopGrid').innerHTML=h;
+}
+function openShop(){document.getElementById('shopOverlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeShop(){document.getElementById('shopOverlay').classList.remove('open');document.body.style.overflow='';}
+
+/* ===== MISSIONS ===== */
+function renderMissions(){
+  var groups={},h='';
+  MISSIONS.forEach(function(m){ (groups[m.group]=groups[m.group]||[]).push(m); });
+  for(var g in groups){
+    h+='<div class="mm-section">'+g.toUpperCase()+'</div>';
+    groups[g].forEach(function(m){
+      var pct=Math.min(100,(m.cur/m.max)*100);
+      h+='<div class="mm-item'+(m.claim?' claim':'')+(m.locked?' locked':'')+'">'+
+         '<div class="mi-body">'+
+         '<div class="mi-title">'+m.t+'</div>'+
+         '<div class="mi-bar"><div class="mi-fill" style="width:'+pct+'%;"></div></div>'+
+         '<div class="mi-meta"><span>'+m.cur+'/'+m.max+'</span><span class="mi-reward">'+m.reward+'</span></div>'+
+         '</div>'+
+         (m.claim?'<button class="claim-btn" onclick="claimReward(this)">Nhận</button>':'')+
+         (m.locked?'<span style="font-size:14px;">🔒</span>':'')+
+         '</div>';
+    });
+  }
+  document.getElementById('mmBody').innerHTML=h;
+}
+function openMissions(){renderMissions();document.getElementById('missionOverlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeMissions(){document.getElementById('missionOverlay').classList.remove('open');document.body.style.overflow='';}
+function claimReward(btn){
+  points+=150;updatePoints();
+  btn.textContent='✓ Đã nhận';btn.disabled=true;
+  btn.style.cssText='background:var(--border-2);color:var(--text-3);padding:6px 14px;border-radius:6px;font-size:11px;font-weight:800;border:none;';
+  var b=document.getElementById('missionBadge');if(b)b.style.display='none';
+  flash('🎉 Đã nhận 150 điểm!');
+}
+
+/* ===== AI ===== */
+function toggleAI(){document.getElementById('aiChat').classList.toggle('open');}
+function aiSend(txt){
+  var inp=document.getElementById('aiInput');
+  var msg=txt||inp.value.trim();
+  if(!msg)return;
+  inp.value='';
+  var b=document.getElementById('aiBody');
+  b.innerHTML+='<div class="ai-msg me">'+msg+'</div>';
+  b.scrollTop=b.scrollHeight;
+  setTimeout(function(){
+    var r={
+      'Gợi ý bài học':'Bạn đang ở bài "Rê bóng dính chân" (26%). Mình gợi ý hoàn thành bài này trước, sau đó học "Phòng ngự" — rất hữu ích nếu bạn hay bị mất bóng.',
+      'Gợi ý đội hình':'Với ngân sách trung bình, sơ đồ 4-2-3-1 kết hợp Team Color Manchester City đang khá mạnh mùa này. Bạn muốn mình gợi ý cầu thủ cụ thể không?',
+      'Chiến thuật':'Meta hiện tại ưa chuộng 4-2-3-1 tấn công nhanh. Ưu điểm: cân bằng công thủ, 2 CDM che chắn hàng thủ tốt. Bạn muốn tìm hiểu sơ đồ nào?'
+    }[msg]||'Mình hiểu câu hỏi của bạn. Bạn có thể cho mình biết cụ thể hơn không? Ví dụ bạn đang gặp khó ở phần nào trong game?';
+    b.innerHTML+='<div class="ai-msg bot">'+r+'</div>';
+    b.scrollTop=b.scrollHeight;
+  },600);
+}
+
+/* ===== INIT ===== */
+renderShop();
+</script>
+</body>
+</html>
